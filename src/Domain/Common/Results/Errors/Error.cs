@@ -1,0 +1,42 @@
+﻿namespace Domain.Common.Results.Errors
+{
+  public readonly record struct Error
+  {
+    private Error(string code, string description, ErrorTypes type)
+    {
+      Code = code;
+      Description = description;
+      Type = type;
+    }
+
+    public string Code { get; }
+
+    public string Description { get; }
+
+    public ErrorTypes Type { get; }
+
+    public static Error Failure(string code = nameof(Failure), string description = "General failure.")
+        => new(code, description, ErrorTypes.Failure);
+
+    public static Error Unexpected(string code = nameof(Unexpected), string description = "Unexpected error.")
+        => new(code, description, ErrorTypes.Unexpected);
+
+    public static Error Validation(string code = nameof(Validation), string description = "Validation error")
+        => new(code, description, ErrorTypes.Validation);
+
+    public static Error Conflict(string code = nameof(Conflict), string description = "Conflict error")
+        => new(code, description, ErrorTypes.Conflict);
+
+    public static Error NotFound(string code = nameof(NotFound), string description = "Not found error")
+        => new(code, description, ErrorTypes.NotFound);
+
+    public static Error Unauthorized(string code = nameof(Unauthorized), string description = "Unauthorized error")
+        => new(code, description, ErrorTypes.Unauthorized);
+
+    public static Error Forbidden(string code = nameof(Forbidden), string description = "Forbidden error")
+        => new(code, description, ErrorTypes.Forbidden);
+
+    public static Error Create(int type, string code, string description)
+        => new(code, description, (ErrorTypes)type);
+  }
+}
